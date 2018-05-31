@@ -152,7 +152,7 @@ N/A (for the moment)
 
 * HasMany relations is not properly dealt with. Currently a custom component is required.
 * Clearing of dangling objects
-* clean up
+* a lot of standard input components
 
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
