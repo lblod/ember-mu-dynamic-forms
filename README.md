@@ -81,7 +81,7 @@ Usage
 This addon adds a model file, form-solution.js in the host app (see blueprints).
 This provides an entry point to link the dynamic forms with the model you want to talk about.
 
-Once installed and configured in the host app, the file coud look like e.g. :
+Once installed and configured in the host app, the file could look like e.g. :
 
 ```
 import FormSolution from '@lblod/ember-mu-dynamic-forms/models/form-solution' ;
@@ -127,7 +127,7 @@ Saving the form data, is an async operation and could like:
 ```
 ### custom input fields
 Custom field can be build.
-They need to be located in components/input-fields/your-custom-input-field/edit
+They need to be located in components/input-fields/your-custom-input-field/edit.
 The display-type in form-node should match the name of your component.
 
 
@@ -153,6 +153,7 @@ N/A (for the moment)
 * HasMany relations is not properly dealt with. Currently a custom component is required.
 * Clearing of dangling objects
 * a lot of standard input components
+* ...
 
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
