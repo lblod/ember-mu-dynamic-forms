@@ -1,6 +1,5 @@
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
-import Component from '@ember/component';
 import { observer } from '@ember/object';
 import { inject as service } from '@ember/service';
 import isDynamicSubformValueMatch from '../utils/is-dynamic-subform-value-match';
@@ -68,10 +67,14 @@ export default Mixin.create({
     }
   },
 
+  /* eslint-disable no-alert, ember/use-brace-expansion*/
+
   subform: computed('model.identifier', 'value', 'model.dynamicSubforms.[]', 'model.dynamicSubforms.@each.{key,value}', function() {
     const subform = this.get('model.dynamicSubforms').find(f => {
       return isDynamicSubformValueMatch(f, this.get('model.identifier'), this.get('value'));
     });
     return subform;
   })
+
+  /* eslint-enable no-alert */
 });

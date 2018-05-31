@@ -63,6 +63,8 @@ export default Component.extend({
       });
       const nonDisplayedProperties = properties.filter(x => !displayedProperties.includes(x));
 
+    /* eslint-disable no-alert, no-console */
+
       nonDisplayedProperties.forEach((prop) => {
         const pathSegments = prop.split('.');
 
@@ -79,6 +81,8 @@ export default Component.extend({
           pathSegments.pop();
         }
       });
+
+    /* eslint-enable no-alert */
 
     const inputTypeMap = this.get('model.inputTypeMap');
 
