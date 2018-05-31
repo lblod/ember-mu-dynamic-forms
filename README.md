@@ -1,4 +1,4 @@
-vo-dynamic-forms
+@lblod/ember-mu-dynamic-forms
 ==============================================================================
 
 [Short description of the addon.]
@@ -7,7 +7,7 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install vo-dynamic-forms
+ember install @lblod/ember-mu-dynamic-forms
 ```
 
 
@@ -23,7 +23,7 @@ Contributing
 ### Installation
 
 * `git clone <repository-url>`
-* `cd vo-dynamic-forms`
+* `cd ember-mu-dynamic-forms`
 * `npm install`
 
 ### Linting

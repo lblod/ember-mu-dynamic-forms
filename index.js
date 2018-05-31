@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = {
-  name: 'vo-dynamic-forms'
+  name: '@lblod/ember-mu-dynamic-forms',
+  isDevelopingAddon(){return true;}
 };

@@ -1,7 +1,7 @@
 {
-  "name": "vo-dynamic-forms",
+  "name": "@lblod/ember-mu-dynamic-forms",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "A dynamic form render assuming mu",
   "keywords": [
     "ember-addon"
   ],
@@ -19,7 +19,10 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^6.6.0"
+    "ember-cli-babel": "^6.6.0",
+    "ember-cli-htmlbars": "^2.0.1",
+    "ember-mu-transform-helpers": "^1.1.0",
+    "ember-power-select": "^2.0.0-beta.3"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -27,7 +30,6 @@
     "ember-cli": "~3.0.1",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-eslint": "^4.2.1",
-    "ember-cli-htmlbars": "^2.0.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-qunit": "^4.1.1",
