@@ -3,7 +3,11 @@
       <div class="form__label">
         <label class="form__label" form="orgaan">{{child.label}}</label>
       </div>
-      {{edit-child model=child solution=solution class="form__input" disabled=disabled}}
+      {{#unless show}}
+        {{edit-child model=child solution=solution class="form__input" show=show}}
+      {{else}}
+         {{show-child model=child solution=solution class="form__input" show=show}}
+      {{/unless}}
     </div>
   {{/each}}
 
