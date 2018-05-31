@@ -1,0 +1,10 @@
+  {{#each sortedChildren as |child|}}
+    <div class="form__row">
+      <div class="form__label">
+        <label class="form__label" form="orgaan">{{child.label}}</label>
+      </div>
+      {{edit-child model=child solution=solution class="form__input" disabled=disabled}}
+    </div>
+  {{/each}}
+
+{{yield}}
