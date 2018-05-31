@@ -19,6 +19,20 @@ export default Component.extend({
     };
   },
 
+  /**
+   * The structure of options object should match:
+   *
+   *   {
+   *           "queryModel": "NameOfModel",
+   *           "displayProperty": "NameOfPropertyToDisplay",
+   *           "filter": {
+   *                   "filterKey": "filter[label]",
+   *                   "queryParams": {
+   *                           "sort": "label"
+   *                  }
+   *           }
+   *   }
+   */
   async didReceiveAttrs(){
     this._super(...arguments);
     let options = this.get('model.options');
