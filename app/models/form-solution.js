@@ -1,8 +1,1 @@
-import DS from 'ember-data';
-import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
-
-export default DS.Model.extend({
-  hasOwner: attr(),
-  formNode: belongsTo('form-node')
-});
+export { default } from '@lblod/ember-mu-dynamic-forms/models/form-solution';
