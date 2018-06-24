@@ -1,5 +1,9 @@
 {{component childComponentName model=model solution=solution options=model.options}}
 
-{{#if subform}}
-  {{form-node model=subform.formNode solution=solution show=show}}
+{{#if subform.isRunning}}
+  loading...
+{{/if}}
+
+{{#if (await subform)}}
+  {{form-node model=(get (await subform) 'formNode') solution=solution show=show}}
 {{/if}}
