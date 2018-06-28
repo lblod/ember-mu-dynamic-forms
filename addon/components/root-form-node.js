@@ -95,7 +95,6 @@ export default Component.extend({
 
     for(let i = 0; i < displayedProperties.length; i++) {
       const prop = displayedProperties[i];
-      debug(`Handling displayed property ${prop}`);
       const propSegments = prop.split('.');
 
       const savePath = async (path) => {

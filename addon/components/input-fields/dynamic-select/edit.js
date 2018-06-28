@@ -46,6 +46,7 @@ export default Component.extend({
       if (value && value.get('isNew')) { // only already existing options are allowed
         value.destroyRecord();
         value = null;
+        this.set(`solution.${this.get('model.identifier')}`, value);
       }
 
       this.set('object_instance', value);

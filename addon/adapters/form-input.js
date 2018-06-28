@@ -10,7 +10,7 @@ export default DS.JSONAPIAdapter.extend({
     let options = { data: {} };
     if (relationship.key == 'dynamicSubforms') {
       options.data['page'] = { size: 10000 };
-      options.data['include'] = 'form-node';
+//      options.data['include'] = 'form-node';
     }
 
     return this.ajax(url, 'GET', options);
