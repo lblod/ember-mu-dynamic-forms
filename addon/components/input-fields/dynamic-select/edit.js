@@ -13,7 +13,7 @@ export default Component.extend({
 
   buildQueryParams(options){
     return ( searchString ) => {
-      let filter = options.filter.queryParams;
+      const filter = options.filter.queryParams;
       filter[options.filter.filterKey] = searchString;
       return filter;
     };
@@ -41,14 +41,22 @@ export default Component.extend({
     this.set('queryParams', this.buildQueryParams(options));
 
     if (this.get('model')) {
-      const value = this.get(`solution.${this.get('model.identifier')}`);
+      let value = await this.get(`solution.${this.get('model.identifier')}`);
+
+      if (value && value.get('isNew')) { // only already existing options are allowed
+        value.destroyRecord();
+        value = null;
+      }
+
       this.set('object_instance', value);
     }
   },
 
   search: task(function* (searchData){
     yield timeout(300);
-    return yield this.get('store').query(this.get('queryModel'), yield this.get('queryParams')(searchData));
+    const queryParams = this.get('queryParams')(searchData);
+    const resources = yield this.get('store').query(this.get('queryModel'), queryParams);
+    return resources;
   }),
 
   actions: {
