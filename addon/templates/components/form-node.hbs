@@ -1,5 +1,5 @@
-{{#if allChildren.isRunning}}
-  loading...
+{{#if (is-pending model.children)}}
+  Aan het laden...
 {{/if}}
 
 {{#each (await sortedChildren) as |child|}}
@@ -10,7 +10,7 @@
       {{#unless show}}
         {{edit-child model=child solution=solution class="form__input" show=show}}
       {{else}}
-         {{show-child model=child solution=solution class="form__input" show=show}}
+        {{show-child model=child solution=solution class="form__input" show=show}}
       {{/unless}}
     </div>
   {{/each}}

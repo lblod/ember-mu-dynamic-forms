@@ -1,7 +1,7 @@
 {{component childComponentName model=model solution=solution options=model.options}}
 
-{{#if subform.isRunning}}
-  loading...
+{{#if (is-pending model.dynamicSubforms)}}
+  Aan het laden...
 {{/if}}
 
 {{#if (await subform)}}
