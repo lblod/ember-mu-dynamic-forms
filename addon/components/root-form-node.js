@@ -2,10 +2,15 @@ import { debug } from '@ember/debug';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import isDynamicSubformValueMatch from '../utils/is-dynamic-subform-value-match';
+import { A } from '@ember/array';
 import layout from '../templates/components/root-form-node';
 
 const flatten = function(arr) {
   return [].concat(...arr);
+};
+
+const isHasManyType = function(kind){
+  return kind.endsWith('[]');
 };
 
 const walkFormNode = async (node) => {
@@ -66,6 +71,8 @@ export default Component.extend({
     });
     debug('Calculated all expanded property paths');
 
+    const inputTypeMap = this.get('model.inputTypeMap');
+
     nonDisplayedProperties.forEach((prop) => {
       const pathSegments = prop.split('.');
 
@@ -73,8 +80,10 @@ export default Component.extend({
         const key = pathSegments.join('.');
 
         if(!expandedDisplayedProperties[key]) {
+          const kind = inputTypeMap[key];
           try {
-            this.set(`solution.${key}`, null);
+            const value = kind && isHasManyType(kind) ? A() : null;
+            this.set(`solution.${key}`, value);
           } catch (e) {
             debug(`Couldn't set prop ${key}: ${e.message}`);
           }
@@ -82,11 +91,11 @@ export default Component.extend({
         pathSegments.pop();
       }
     });
-
-    const inputTypeMap = this.get('model.inputTypeMap');
+    debug('Resetted the value of all non-displayed properties');
 
     for(let i = 0; i < displayedProperties.length; i++) {
       const prop = displayedProperties[i];
+      debug(`Handling displayed property ${prop}`);
       const propSegments = prop.split('.');
 
       const savePath = async (path) => {
@@ -97,8 +106,10 @@ export default Component.extend({
         const kind = inputTypeMap[key];
         if (kind) {
           const resource = await this.get(`solution.${key}`);
-          if (resource)
+          if (resource) {
             await resource.save();
+            debug(`Saved resource at property path ${key}`);
+          }
         }
         path.pop();
         await savePath(path);
@@ -108,6 +119,7 @@ export default Component.extend({
     }
 
     await this.get('solution').save();
+    debug('Saved solution');
     return this.get('solution');
   },
 
