@@ -4,7 +4,7 @@ export default function isDynamicSubformValueMatch(form, identifier, value) {
   if(!form.get('key') === identifier)
       return false;
 
-  let matchKind = form.get('matchKind');
+  const matchKind = form.get('matchKind');
 
   if(!matchKind || matchKind === 'uri')
     return form.get('value') === value;

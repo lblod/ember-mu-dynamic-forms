@@ -4,7 +4,6 @@ import { observer } from '@ember/object';
 import { inject as service } from '@ember/service';
 import isDynamicSubformValueMatch from '../utils/is-dynamic-subform-value-match';
 import { A } from '@ember/array';
-import { task } from 'ember-concurrency';
 
 export default Mixin.create({
   store: service(),
@@ -68,23 +67,10 @@ export default Mixin.create({
     }
   },
 
-  /* eslint-disable no-alert, ember/use-brace-expansion*/
-  getSubForm: task(function* (){
-    let modelName = this.get('model').constructor.modelName;
-    const data = yield this.get('store').query(modelName, {
-      'filter[id]': this.get('model.id'),
-      'include': 'dynamic-subforms'
-    });
-    const subforms = yield data.firstObject.get('dynamicSubforms');
-    const subform = subforms.find(f => {
+  subform: computed('model.identifier', 'value', 'model.dynamicSubforms.[]', 'model.dynamicSubforms.@each.{key,value}', function() {
+    const subform = this.get('model.dynamicSubforms').find(f => {
       return isDynamicSubformValueMatch(f, this.get('model.identifier'), this.get('value'));
     });
     return subform;
-  }),
-
-  subform: computed('model.identifier', 'value', 'model.dynamicSubforms.[]', 'model.dynamicSubforms.@each.{key,value}', function() {
-    return this.getSubForm.perform();
   })
-
-  /* eslint-enable no-alert */
 });
