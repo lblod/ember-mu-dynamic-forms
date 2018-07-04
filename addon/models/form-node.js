@@ -4,5 +4,5 @@ import attr from 'ember-data/attr';
 
 export default DS.Model.extend({
   inputTypeMap: attr('json'),
-  children: hasMany('form-input')
+  children: hasMany('form-input', { inverse: null })
 });
