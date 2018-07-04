@@ -1,4 +1,6 @@
-{{component childComponentName model=model solution=solution options=model.options}}
+{{#unless prepopulateSolution.isRunning}}
+  {{component childComponentName model=model solution=solution options=model.options}}
+{{/unless}}
 
 {{#if (is-pending model.dynamicSubforms)}}
   Aan het laden...

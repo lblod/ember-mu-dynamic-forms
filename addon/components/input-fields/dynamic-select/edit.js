@@ -1,3 +1,4 @@
+import { debug } from '@ember/debug';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
@@ -44,6 +45,7 @@ export default Component.extend({
       let value = await this.get(`solution.${this.get('model.identifier')}`);
 
       if (value && value.get('isNew')) { // only already existing options are allowed
+        debug(`Reset value of dynamic-select '${this.queryModel}' to null`);
         value.destroyRecord();
         value = null;
         this.set(`solution.${this.get('model.identifier')}`, value);
