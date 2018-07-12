@@ -124,11 +124,26 @@ export default Component.extend({
     });
     debug('Resetted the value of all non-displayed properties');
 
+    // In order to save the solutions, we should save the most deeply
+    // nested resources first, then the parent resources.  Otherwise,
+    // there may be items without an id.  We save these items as a
+    // map, so they're easy to fill and so we can attach the resource
+    // to be saved to the map.  Later we take the keys of this map and
+    // sort them by string length (longest first).  This ensures we
+    // save the most deeply nested objects first.  It also ensures we
+    // don't save a resource at the same key more than once.
+
+    // In contrast to earlier solutions, the current solution first
+    // determines all the keys to save, orders them by length, and
+    // saves the items from there on.  This helps us not save
+    // duplicate values.
+    const resourcesToSave = {};
+
     for(let i = 0; i < displayedProperties.length; i++) {
       const prop = displayedProperties[i];
       const propSegments = prop.split('.');
 
-      const savePath = async (path) => {
+      const fillResourcesToSave = async (path) => {
         if (path.length == 0)
           return;
 
@@ -137,17 +152,32 @@ export default Component.extend({
         if (kind) {
           const resource = await this.get(`solution.${key}`);
           if (resource) {
-            await resource.save();
+            resourcesToSave[key] = resource;
             debug(`Saved resource at property path ${key}`);
           }
         }
         path.pop();
-        await savePath(path);
+        await fillResourcesToSave(path);
       };
 
-      await savePath(propSegments);
+      await fillResourcesToSave(propSegments);
     }
 
+    const sortedResourcesToSaveKeys = [];
+    // map.keys does not exist in IE11
+    for(let key in resourcesToSave) {
+      sortedResourcesToSaveKeys.push( key );
+    }
+    // sort longest keys first
+    sortedResourcesToSaveKeys.sort((a, b) => a.length > b.length);
+    // execute the saving of the related resource
+    for(let i = 0; i < sortedResourcesToSaveKeys.length; i++) {
+      const resourceToSaveKey = sortedResourcesToSaveKeys[i];
+      const resourceToSave = resourcesToSave[resourceToSaveKey];
+      await resourceToSave.save();
+    }
+
+    // save the top-level solution
     await this.get('solution').save();
     debug('Saved solution');
     return this.get('solution');
