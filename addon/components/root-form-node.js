@@ -26,6 +26,29 @@ const walkFormNode = async (node) => {
   return flatten(walkedInputs);
 };
 
+/**
+ * Similar to walkFormNode, but only walks the form nodes which have
+ * allready been fetched from the backend.  This is sufficient for
+ * saving, as all values which we may have altered, must have been
+ * fetched in the database.  This must therefore also be a superset of
+ * all the currently displayed values.
+ */
+const walkPeekedFormNode = (node) => {
+  const formInputs = node.hasMany('children').value() || [];
+  const walkedInputs = formInputs.map( (input) => {
+    const subforms = input.hasMany('dynamicSubforms').value() || [];
+    const walkedSubformNodes =
+          subforms
+          .filter( (subform) => subform.belongsTo('formNode').value != null )
+          .map( (subform) => {
+            const formNode = subform.belongsTo('formNode').value();
+            return walkPeekedFormNode( formNode );
+          } );
+    return [input.get('identifier'), ...flatten(walkedSubformNodes)];
+  } );
+  return flatten( walkedInputs );
+};
+
 const walkDisplayedFormNodes = async (node, solution) => {
   const formInputs = await node.get('children');
   const walkedInputs = await Promise.all(formInputs.map(async (input) => {
@@ -50,12 +73,20 @@ export default Component.extend({
   store: service(),
 
   async save() {
-    const properties = await walkFormNode(this.get('model'));
+    const model = await this.model;
+    const solution = await this.solution;
+
+    const displayedProperties = await walkDisplayedFormNodes(model, solution);
+    displayedProperties.sort((a, b) => a.length < b.length);
+
+    // by fetching the properties *after* fetchin the
+    // displayedProperties, we know all content for currently shown
+    // values must have been fetched from the database.
+    debug("getting peeked form nodes");
+    const properties = walkPeekedFormNode(model);
     properties.sort((a, b) => a.length < b.length);
     debug('Calculated all property paths');
 
-    const displayedProperties = await walkDisplayedFormNodes(this.get('model'), this.get('solution'));
-    displayedProperties.sort((a, b) => a.length < b.length);
     const nonDisplayedProperties = properties.filter(x => !displayedProperties.includes(x));
     debug('Calculated all displayed/non-displayed property paths');
 
