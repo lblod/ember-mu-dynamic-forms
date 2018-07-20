@@ -1,6 +1,6 @@
 {
   "name": "@lblod/ember-mu-dynamic-forms",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A dynamic form render assuming mu",
   "keywords": [
     "ember-addon"
