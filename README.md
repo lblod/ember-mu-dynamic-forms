@@ -149,7 +149,6 @@ Contributing
 N/A (for the moment)
 
 ### Still to do
-
 * HasMany relations is not properly dealt with. Currently a custom component is required.
 * Clearing of dangling objects
 * a lot of standard input components
