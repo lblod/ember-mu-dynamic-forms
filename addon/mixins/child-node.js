@@ -32,8 +32,8 @@ export default Mixin.create({
    * Called when either the resource, the property, or the value of
    * the property in the resource, is changed.
    */
-  updateResourceValue: function(){
-    const value = this.get(`solution.${this.get('model.identifier')}`);
+  updateResourceValue: async function(){
+    const value = await this.get(`solution.${this.get('model.identifier')}`);
     this.set('value', value);
   },
 
