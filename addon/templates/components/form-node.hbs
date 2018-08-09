@@ -3,7 +3,7 @@
 {{/if}}
 
 {{#each (await sortedChildren) as |child|}}
-    <div class="form__row">
+    <div class="form__row form__row--{{child.displayType}}">
       <div class="form__label">
         <label class="form__label" form="orgaan">{{child.label}}</label>
       </div>
