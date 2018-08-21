@@ -1,10 +1,12 @@
-{{#power-select
-   allowClear=allowClear
-   disabled=disabled
-   options=initOptions
-   search=(perform search)
-   selected=object_instance
-   onchange=(action "select")
-   as |object_instance|}}
-  {{get object_instance displayProperty}}
-{{/power-select}}
+<div class="power-select">
+  {{#power-select
+     allowClear=allowClear
+     disabled=disabled
+     options=initOptions
+     search=(perform search)
+     selected=object_instance
+     onchange=(action "select")
+     as |object_instance|}}
+    {{get object_instance displayProperty}}
+  {{/power-select}}
+</div>

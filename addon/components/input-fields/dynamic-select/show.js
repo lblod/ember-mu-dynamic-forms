@@ -1,7 +1,8 @@
 import Component from '@ember/component';
 import layout from '../../../templates/components/input-fields/dynamic-select/show';
+import InputField from '../../../mixins/input-field';
 
-export default Component.extend({
+export default Component.extend( InputField, {
   layout,
   async didReceiveAttrs(){
     this._super(...arguments);

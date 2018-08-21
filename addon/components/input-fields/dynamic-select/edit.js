@@ -4,8 +4,9 @@ import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { alias } from '@ember/object/computed';
 import layout from '../../../templates/components/input-fields/dynamic-select/edit';
+import InputField from '../../../mixins/input-field';
 
-export default Component.extend({
+export default Component.extend( InputField, {
   layout,
   store: service(),
 

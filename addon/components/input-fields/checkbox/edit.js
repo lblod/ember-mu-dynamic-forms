@@ -1,19 +1,18 @@
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from '../../../templates/components/input-fields/checkbox/edit';
+import InputField from '../../../mixins/input-field';
 
-export default Component.extend({
+export default Component.extend( InputField, {
   layout,
-  didReceiveAttrs() {
-    this._super(...arguments);
-    if (this.get('model')) {
-      const value = this.get(`solution.${this.get('model.identifier')}`);
-      this.set('value', value);
-    }
-  },
+
+  activeInputStates: computed( function() {
+    return [];
+  }),
+
   actions: {
-    editSolution() {
-      const prop = this.get('model.identifier');
-      this.set(`solution.${prop}`, !this.get('value'));
+    toggleValue() {
+      this.updateValue( !this.get('value') );
     }
   }
 });
