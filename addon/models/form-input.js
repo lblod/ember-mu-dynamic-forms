@@ -8,5 +8,6 @@ export default DS.Model.extend({
   displayType: attr(),
   options: attr('json'),
   identifier: attr(),
-  dynamicSubforms: hasMany('dynamic-subform')
+  dynamicSubforms: hasMany('dynamic-subform'),
+  inputStates: hasMany('input-state')
 });
