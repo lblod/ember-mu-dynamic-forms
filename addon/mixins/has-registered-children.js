@@ -1,3 +1,4 @@
+import EmberObject from '@ember/object';
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
@@ -13,12 +14,12 @@ export default Mixin.create({
 
   // childComponents will contain all the child components
   childComponents: computed( 'registeredChildrenModels.[]', 'childComponentsBuffer.[]', function() {
-    const sortedChildren = this.sortedChildren || [];
+    const registeredChildrenModels = this.registeredChildrenModels || [];
     const childComponentsBuffer = this.childComponentsBuffer || [];
 
-    return sortedChildren
-      .map( (child) => childComponentsBuffer.findBy( 'child', child ) )
-      .filter( (element) => element && true );
+    return A(registeredChildrenModels
+             .map( (child) => childComponentsBuffer.findBy( 'child', child ) )
+             .filter( (element) => element && true ));
   }),
 
   actions: {
@@ -26,8 +27,9 @@ export default Mixin.create({
     // filled in with the corresponding model.
     registerChild( child, component ) {
       const livingChildren = this.childComponentsBuffer.filter( (component) => ! component.isDestroyed );
-      livingChildren.pushObject( { child, component } );
-      this.set( 'childComponentsBuffer', livingChildren );
+      const newChild = new EmberObject({ child, component });
+      const newLivingChildren = A([ newChild, ...livingChildren ]);
+      this.set( 'childComponentsBuffer', newLivingChildren );
     }
   }
 });

@@ -1,5 +1,5 @@
 {{#unless prepopulateSolution.isRunning}}
-  {{component childComponentName model=model solution=solution options=model.options}}
+  {{component childComponentName model=model solution=solution options=model.options register=(action "registerChildComponent") value=value updateValue=(action "updateValue")}}
 {{/unless}}
 
 {{#if (is-pending model.dynamicSubforms)}}
@@ -7,5 +7,19 @@
 {{/if}}
 
 {{#if (await subform)}}
-  {{form-node model=(get (await subform) 'formNode') solution=solution show=show value=value updateValue=(action "updateValue")}}
+  {{form-node model=(get (await subform) 'formNode') solution=solution show=show register=(action "registerSubForm")}}
 {{/if}}
+
+
+<hr />
+Edit-child information:
+
+{{#each everyKeys as |key|}}
+  {{key}}
+{{/each}}
+
+{{#each anyKeys as |key|}}
+  {{key}}
+{{/each}}
+
+<hr />

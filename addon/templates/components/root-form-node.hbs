@@ -1,1 +1,15 @@
-{{form-node solution=solution model=model show=show}}
+{{form-node solution=solution model=model show=show registerFormNode=(action "registerFormNode")}}
+
+States available somewhere:
+<ul>
+  {{#each formNode.anyKeys as |key|}}
+    <li>{{key}}</li>
+  {{/each}}
+</ul>
+
+States active on each element:
+<ul>
+  {{#each formNode.everyKeys as |key|}}
+    <li>{{key}}</li>
+  {{/each}}
+</ul>

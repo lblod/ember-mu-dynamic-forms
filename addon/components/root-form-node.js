@@ -191,5 +191,11 @@ export default Component.extend({
   didInsertElement(){
     this._super(...arguments);
     this.get('onDynamicFormInit')(this);
+  },
+
+  actions: {
+    registerFormNode( formNode ) {
+      this.set("formNode", formNode );
+    }
   }
 });
