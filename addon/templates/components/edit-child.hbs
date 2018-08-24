@@ -14,12 +14,32 @@
 <hr />
 Edit-child information:
 
-{{#each everyKeys as |key|}}
+<br />
+Value: {{value}}
+
+<br />
+Union States of subform:
+{{#each subForm.unionStates as |key|}}
+  {{anyKey}}
+{{/each}}
+
+<br />
+Union States of child component:
+{{#each childComponent.unionStates as |key|}}
   {{key}}
 {{/each}}
 
-{{#each anyKeys as |key|}}
+<br />
+Union States:
+{{#each unionStates as |key|}}
   {{key}}
 {{/each}}
+
+<br />
+Intersection States:
+{{#each intersectionStates as |key|}}
+  {{key}}
+{{/each}}
+
 
 <hr />

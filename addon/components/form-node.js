@@ -11,7 +11,7 @@ export default Component.extend( HasRegisteredChildren, {
   sortedChildren: sort('model.children', 'sorting'),
   registeredChildrenModels: alias( 'sortedChildren' ),
 
-  everyKeys: computed('childComponentInstances{.@each.everyKeys,.[],}', function(){
+  intersectionStates: computed('childComponentInstances{.@each.intersectionStates,.[],}', function(){
     if (this.childComponentInstances.length == 0) {
       // no child components, hence no states possible
       return [];
@@ -21,23 +21,24 @@ export default Component.extend( HasRegisteredChildren, {
 
       // calculate the intersection of all states
       return this.childComponentInstances
-        .map( (childComponent) => childComponent.everyKeys || [] )
+        .map( (childComponent) => childComponent.intersectionStates || [] )
         .reduce( (oldStates, newStates) => {
-          return oldStates.filter( (oldState) => newStates.find( oldState ) );
+          return oldStates.filter( (oldState) => newStates.find( (s) => s == oldState ) );
         });
     }
   }),
     
-  anyKeys: computed('childComponentInstances{.@each.everyKeys,.[],}', function(){
+  unionStates: computed('childComponentInstances{.@each.unionStates,.[],}', function(){
     // NOTE: we deliberately emit a new key here, so we can do
     // an @each on a higher level on this complete object
     if (this.childComponentInstances.length == 0) {
       return [];
     } else {
-      return this.childComponentInstances
-        .map( (childComponent) => childComponent.anyKeys || [] )
-        .reduce( (oldStates, newStates) => oldStates.concat( newStates ) )
-        .uniq();
+      const union = this.childComponentInstances
+            .map( (childComponent) => childComponent.unionStates || [] )
+            .reduce( (oldStates, newStates) => oldStates.concat( newStates ) )
+            .uniq();
+      return union;
     }
   }),
   
@@ -47,9 +48,9 @@ export default Component.extend( HasRegisteredChildren, {
 
   init() {
     this._super(...arguments);
-    if( this.registerFormNode ){
+    if( this.register ){
       console.log('Registering form node with rootFormNode');
-      this.registerFormNode( this );
+      this.register( this );
     }
   }
 });

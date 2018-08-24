@@ -1,15 +1,18 @@
-{{form-node solution=solution model=model show=show registerFormNode=(action "registerFormNode")}}
+{{form-node solution=solution model=model show=show register=(action "registerFormNode")}}
 
-States available somewhere:
+<hr />
+Form node:
+<br />
+Union States:
 <ul>
-  {{#each formNode.anyKeys as |key|}}
+  {{#each formNode.unionStates as |key|}}
     <li>{{key}}</li>
   {{/each}}
 </ul>
 
-States active on each element:
+Intersection States:
 <ul>
-  {{#each formNode.everyKeys as |key|}}
+  {{#each formNode.intersectionStates as |key|}}
     <li>{{key}}</li>
   {{/each}}
 </ul>

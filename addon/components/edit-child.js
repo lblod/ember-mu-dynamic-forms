@@ -1,3 +1,4 @@
+import { warn } from '@ember/debug';
 import { A } from '@ember/array';
 import { alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
@@ -11,22 +12,26 @@ export default Component.extend(IsRegisteredChild, ChildNode, {
   childComponentName: computed('model.displayType', function() {
     return `input-fields/${this.get('model.displayType')}/edit`;
   }),
-  everyKeys: computed('childComponent.everyKeys{,.[]}','subForm.everyKeys{,.[]}', function(){
-    const childKeys = this.get('childComponent.everyKeys') || [];
-    const subFormKeys = this.get('subForm.everyKeys') || [];
+  intersectionStates: computed('childComponent.intersectionStates{,.[]}','subForm.intersectionStates{,.[]}', function(){
+    const childKeys = this.get('childComponent.intersectionStates') || [];
+    const subFormKeys = this.get('subForm.intersectionStates') || [];
+
+    // NOTE: we deliberately emit a new key here, so we can do
+    // an @each on a higher level on this complete object
+    if ( this.subForm  ) {
+      return A(childKeys).filter( (childKey) => subFormKeys.includes( childKey ) );
+    } else {
+      return childKeys;
+    }
+  }),
+    
+  unionStates: computed('childComponent.unionStates{,.[]}','subForm.unionStates{,.[]}', function(){
+    const childKeys = this.get('childComponent.unionStates') || [];
+    const subFormKeys = this.get('subForm.unionStates') || [];
 
     // NOTE: we deliberately emit a new key here, so we can do
     // an @each on a higher level on this complete object
     return A([ ...childKeys, ...subFormKeys ]).uniq();
-  }),
-    
-  anyKeys: computed('childComponent.anyKeys{,.[]}', 'subForm.anyKeys{,.[]}', function(){
-    const childKeys = this.get('childComponent.anyKeys') || [];
-    const subFormKeys = this.get('subForm.anyKeys') || [];
-
-    // NOTE: we deliberately emit a new key here, so we can do
-    // an @each on a higher level on this complete object
-    return A(childKeys).filter( (childKey) => subFormKeys.includes( childKey ) );
   }),
   
   actions: {
@@ -35,7 +40,7 @@ export default Component.extend(IsRegisteredChild, ChildNode, {
         this.set(`solution.${this.get('model.identifier')}`, value);
       } else {
         // TODO: we could cache the value and save it once the identifier became known
-        console.log("Tried to set value before solution or identifier was known");
+        warn("Tried to set value before solution or identifier was known");
       }
     },
     registerChildComponent(childComponent){
