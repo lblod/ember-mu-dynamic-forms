@@ -13,7 +13,12 @@ export default Mixin.create({
       this.set('inputStates', inputStates);
     } );
   },
-  
+
+  hasEmptyInputState: computed('inputStates.[]', function() {
+    const inputStates = this.inputStates || [];
+    return inputStates.filter((s) => { return s.validationName == 'empty'; }).length > 0;
+  }),
+
   activeInputStates: computed( 'inputStates.[]', 'value', function() {
     const inputStates = this.inputStates;
     const value = this.value;
