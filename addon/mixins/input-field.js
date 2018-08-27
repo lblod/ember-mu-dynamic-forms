@@ -31,7 +31,6 @@ export default Mixin.create({
           case "empty":
             return isEmpty(value) && inputState.stateName;
           default:
-            console.log(`Do not know how to process ${inputState.validationName}`);
             return undefined;
         }})
       // remove all non-truethy validation names

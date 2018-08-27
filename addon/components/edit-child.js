@@ -1,6 +1,5 @@
 import { warn } from '@ember/debug';
 import { A } from '@ember/array';
-import { alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import ChildNode from '../mixins/child-node';
