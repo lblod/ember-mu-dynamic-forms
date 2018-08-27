@@ -14,6 +14,8 @@ export default Mixin.create({
     } );
   },
 
+  classNameBindings: ['hasEmptyInputState:is-required'],
+
   hasEmptyInputState: computed('inputStates.[]', function() {
     const inputStates = this.inputStates || [];
     return inputStates.filter((s) => { return s.validationName == 'empty'; }).length > 0;
