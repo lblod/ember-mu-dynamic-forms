@@ -20,7 +20,8 @@ export default Mixin.create({
   }),
 
   activeInputStates: computed( 'inputStates.[]', 'value', function() {
-    const inputStates = this.inputStates;
+    const inputStates = this.inputStates || [];
+
     const value = this.value;
 
     return inputStates
