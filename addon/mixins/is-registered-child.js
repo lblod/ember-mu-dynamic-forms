@@ -6,8 +6,6 @@ export default Mixin.create({
     this._super(...arguments);
     if( this.register ) {
       this.register( this );
-    } else {
-      console.log("No register hook supplied for IsRegisteredChild");
     }
   }
 });

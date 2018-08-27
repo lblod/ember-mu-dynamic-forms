@@ -27,7 +27,7 @@ export default Component.extend( HasRegisteredChildren, {
         });
     }
   }),
-    
+
   unionStates: computed('childComponentInstances{.@each.unionStates,.[],}', function(){
     // NOTE: we deliberately emit a new key here, so we can do
     // an @each on a higher level on this complete object
@@ -41,7 +41,7 @@ export default Component.extend( HasRegisteredChildren, {
       return union;
     }
   }),
-  
+
   childComponentInstances: computed('childComponents.[]', 'childComponents.@each.component', function() {
     return this.childComponents.map( ({component}) => component );
   }),
@@ -49,7 +49,6 @@ export default Component.extend( HasRegisteredChildren, {
   init() {
     this._super(...arguments);
     if( this.register ){
-      console.log('Registering form node with rootFormNode');
       this.register( this );
     }
   }

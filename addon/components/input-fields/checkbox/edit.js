@@ -1,5 +1,3 @@
-import { isEmpty } from '@ember/utils';
-import { alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from '../../../templates/components/input-fields/checkbox/edit';
