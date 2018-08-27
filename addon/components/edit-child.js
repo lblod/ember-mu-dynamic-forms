@@ -24,7 +24,7 @@ export default Component.extend(IsRegisteredChild, ChildNode, {
       return childKeys;
     }
   }),
-    
+
   unionStates: computed('childComponent.unionStates{,.[]}','subForm.unionStates{,.[]}', function(){
     const childKeys = this.get('childComponent.unionStates') || [];
     const subFormKeys = this.get('subForm.unionStates') || [];
@@ -33,7 +33,7 @@ export default Component.extend(IsRegisteredChild, ChildNode, {
     // an @each on a higher level on this complete object
     return A([ ...childKeys, ...subFormKeys ]).uniq();
   }),
-  
+
   actions: {
     updateValue(value) {
       if( this.solution && this.get('model.identifier') ) {
