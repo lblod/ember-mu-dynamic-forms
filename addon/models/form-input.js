@@ -3,7 +3,7 @@ import attr from 'ember-data/attr';
 import { hasMany } from 'ember-data/relationships';
 
 export default DS.Model.extend({
-  index: attr(),
+  index: attr('number'),
   label: attr(),
   displayType: attr(),
   options: attr('json'),
