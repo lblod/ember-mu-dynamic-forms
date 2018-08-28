@@ -37,7 +37,7 @@ export default Component.extend( InputField, {
         this.set(`solution.${this.get('model.identifier')}`, value);
       }
 
-      this.set('object_instance', value);
+      this.set('internalValue', value);
     }
   },
 
@@ -70,9 +70,8 @@ export default Component.extend( InputField, {
 
   actions: {
     select(object_instance){
-      this.set('object_instance', object_instance);
-      const prop = this.get('model.identifier');
-      this.set(`solution.${prop}`, object_instance);
+      this.set('internalValue', object_instance);
+      this.updateValue( this.internalValue );
     }
   }
 });

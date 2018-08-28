@@ -11,7 +11,7 @@ export default Component.extend( InputField, {
 
     if (this.get('model')) {
       const value = this.get(`solution.${this.get('model.identifier')}`);
-      this.set('object_instance', value);
+      this.set('internalValue', value);
     }
   }
 });
