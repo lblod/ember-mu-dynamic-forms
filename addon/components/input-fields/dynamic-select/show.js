@@ -6,6 +6,7 @@ import { oneWay } from '@ember/object/computed';
 export default Component.extend( InputField, {
   layout,
   internalValue: oneWay('value'),
+  
   async didReceiveAttrs(){
     this._super(...arguments);
     let options = this.get('model.options');
