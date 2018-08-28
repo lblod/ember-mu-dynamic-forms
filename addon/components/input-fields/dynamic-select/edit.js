@@ -5,10 +5,12 @@ import { task, timeout } from 'ember-concurrency';
 import { alias } from '@ember/object/computed';
 import layout from '../../../templates/components/input-fields/dynamic-select/edit';
 import InputField from '../../../mixins/input-field';
+import { oneWay } from '@ember/object/computed';
 
 export default Component.extend( InputField, {
   layout,
   store: service(),
+  internalValue: oneWay('value'),
 
   //TODO parse these options
   allowClear: true,
@@ -28,16 +30,11 @@ export default Component.extend( InputField, {
     this._super(...arguments);
 
     if (this.get('model')) {
-      let value = await this.get(`solution.${this.get('model.identifier')}`);
-
-      if (value && value.get('isNew')) { // only already existing options are allowed
+      if (this.internalValue && this.internalValue.get('isNew')) { // only already existing options are allowed
         debug(`Reset value of dynamic-select '${this.queryModel}' to null`);
-        value.destroyRecord();
-        value = null;
-        this.set(`solution.${this.get('model.identifier')}`, value);
+        this.internalValue.destroyRecord();
+        this.updateValue( this.internalValue );
       }
-
-      this.set('internalValue', value);
     }
   },
 
@@ -70,8 +67,7 @@ export default Component.extend( InputField, {
 
   actions: {
     select(object_instance){
-      this.set('internalValue', object_instance);
-      this.updateValue( this.internalValue );
+      this.updateValue( object_instance );
     }
   }
 });
