@@ -24,7 +24,7 @@
     "ember-cli-babel": "^6.16.0",
     "ember-cli-htmlbars": "^3.0.0",
     "ember-mu-transform-helpers": "^1.1.0",
-    "ember-power-select": "^2.0.0-beta.3"
+    "ember-power-select": "^2.0.8"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
