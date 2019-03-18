@@ -27,7 +27,7 @@ export default Mixin.create({
     // filled in with the corresponding model.
     registerChild( child, component ) {
       const livingChildren = this.childComponentsBuffer.filter( (component) => ! component.isDestroyed );
-      const newChild = new EmberObject({ child, component });
+      const newChild = EmberObject.create({ child, component });
       const newLivingChildren = A([ newChild, ...livingChildren ]);
       this.set( 'childComponentsBuffer', newLivingChildren );
     }
