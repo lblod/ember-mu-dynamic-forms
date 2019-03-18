@@ -5,6 +5,14 @@ Addon which enables rendering and editing dynamic-forms.
 Assumes mu.semte.ch backend.
 
 
+
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v2.18 or above
+* Ember CLI v2.13 or above
+
+
 Installation
 ------------------------------------------------------------------------------
 
@@ -144,29 +152,8 @@ The display-type in form-node should match the name of your component.
 Contributing
 ------------------------------------------------------------------------------
 
-### Installation
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
-* `git clone <repository-url>`
-* `cd ember-mu-dynamic-forms`
-* `npm install`
-
-### Linting
-
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
-
-### Running the dummy application
-N/A (for the moment)
-
-### Still to do
-* HasMany relations is not properly dealt with. Currently a custom component is required.
-* Clearing of dangling objects
-* a lot of standard input components
-* ...
-
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
 License
 ------------------------------------------------------------------------------
