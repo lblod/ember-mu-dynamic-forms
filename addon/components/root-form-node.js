@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import isDynamicSubformValueMatch from '../utils/is-dynamic-subform-value-match';
 import { A } from '@ember/array';
 import layout from '../templates/components/root-form-node';
+import { alias } from '@ember/object/computed';
 
 const flatten = function(arr) {
   return [].concat(...arr);
@@ -71,6 +72,8 @@ const walkDisplayedFormNodes = async (node, solution) => {
 export default Component.extend({
   layout,
   store: service(),
+
+  model: alias('solution.formNode'),
 
   async save() {
     const model = await this.model;
@@ -181,11 +184,6 @@ export default Component.extend({
     await this.get('solution').save();
     debug('Saved solution');
     return this.get('solution');
-  },
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.set('model', this.get('solution.formNode'));
   },
 
   didInsertElement(){
