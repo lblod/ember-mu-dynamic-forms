@@ -21,7 +21,7 @@ export default Mixin.create({
     return inputStates.filter((s) => { return s.validationName == 'empty'; }).length > 0;
   }),
 
-  activeInputStates: computed( 'inputStates.[]', 'internalValue', function() {
+  activeInputStates: computed( 'inputStates.[]', 'internalValue{,.[]}', function() {
     const inputStates = this.inputStates || [];
 
     const value = this.internalValue;
