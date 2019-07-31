@@ -156,7 +156,6 @@ export default Component.extend({
           const resource = await this.get(`solution.${key}`);
           if (resource) {
             resourcesToSave[key] = resource;
-            debug(`Saved resource at property path ${key}`);
           }
         }
         path.pop();
@@ -178,6 +177,7 @@ export default Component.extend({
       const resourceToSaveKey = sortedResourcesToSaveKeys[i];
       const resourceToSave = resourcesToSave[resourceToSaveKey];
       await resourceToSave.save();
+      debug(`Saved resource at property path ${resourceToSaveKey}`);
     }
 
     // save the top-level solution
